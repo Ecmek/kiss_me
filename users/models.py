@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from PIL import Image
+from django.conf import settings
 
 from .manager import BaseUserManager
 
@@ -43,3 +45,20 @@ class User(AbstractUser):
 
     def __str__(self) -> str:
         return self.email
+
+    def save(self, *args, **kwargs):
+        super().save()
+        if not self.avatar:
+            return
+        img = Image.open(self.avatar.path)
+        width, height = img.size
+        watermark = Image.open(settings.WATERMARK_PATH)
+        watermark.thumbnail(settings.WATERMARK_SIZE)
+        mark_width, mark_height = watermark.size
+        paste_mask = watermark.split()[3].point(
+            lambda i: i * settings.TRANSPARENCY / 100
+        )
+        x = width - mark_width - settings.MARGIN
+        y = height - mark_height - settings.MARGIN
+        img.paste(watermark, (x, y), mask=paste_mask)
+        img.save(self.avatar.path)

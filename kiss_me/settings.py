@@ -119,3 +119,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Auth model
 AUTH_USER_MODEL = 'users.User'
+
+# Watermark settings
+WATERMARK_PATH = BASE_DIR / 'static/watermark/apptrix.png'
+WATERMARK_SIZE = (150, 100)
+TRANSPARENCY = 50
+MARGIN = 10

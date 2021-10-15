@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'match.apps.MatchConfig',
     'rest_framework',
     'rest_framework_simplejwt',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -123,6 +124,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Auth model
 AUTH_USER_MODEL = 'users.User'
 
+# Uploaded imame settings
+MAX_FILE_SIZE = 8388608  # 8MB
+MIN_FILE_SIZE = 102400  # 100kB
+
 # Watermark settings
 WATERMARK_PATH = BASE_DIR / 'static/watermark/apptrix.png'
 WATERMARK_SIZE = (150, 100)
@@ -137,9 +142,11 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
-    # 'DEFAULT_FILTER_BACKENDS': [
-    #     'django_filters.rest_framework.DjangoFilterBackend',
-    # ],
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.SearchFilter',
+        'rest_framework.filters.OrderingFilter',
+    ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 10,
 }

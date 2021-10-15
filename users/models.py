@@ -4,7 +4,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from PIL import Image
 
-from .manager import BaseUserManager
+from .managers import BaseUserManager
 
 
 class User(AbstractUser):

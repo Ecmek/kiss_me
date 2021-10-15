@@ -3,10 +3,11 @@ from rest_framework import routers
 from rest_framework_simplejwt.views import (TokenObtainPairView,
                                             TokenRefreshView)
 
-from .views import MatchAPIView, UserViewSet
+from .views import MatchAPIView, UserListViewSet, UserViewSet
 
 router = routers.DefaultRouter()
 router.register('clients/create', UserViewSet, basename='user_create')
+router.register('list', UserListViewSet, basename='users_list')
 
 urlpatterns = [
     path('', include(router.urls)),

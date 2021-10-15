@@ -11,6 +11,7 @@ class BaseUserManager(DefaultManager):
         user = self.model(email=self.normalize_email(email))
         user.set_password(password)
         user.save()
+
         return user
 
     def create_superuser(self, email, password=None, *args, **kwargs):

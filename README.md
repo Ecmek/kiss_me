@@ -46,7 +46,7 @@ python manage.py runserver
 ```
 ### Parser bs4
 В проекте присутствует парсер для сайта https://www.citilink.ru (Название товара, цена товара, изображение)
-Что бы его им пользоваться необходимо передать 3 параметра в менеджмент команду.
+Чтобы им пользоваться, необходимо передать 3 параметра в менеджмент команду.
 url_category, title_category, slug_category
 ```
 python manage.py https://www.citilink.ru/catalog/setevye-hranilischa-nas/ Сетевые хранилища NAS setevye-hranilischa-nas

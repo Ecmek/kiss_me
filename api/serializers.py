@@ -1,12 +1,13 @@
-from math import radians, sin, cos, acos
+from math import acos, cos, radians, sin
 
-from django.core.exceptions import ObjectDoesNotExist
-from django.contrib.auth import get_user_model
-from rest_framework import serializers
 from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.core.exceptions import ObjectDoesNotExist
+from rest_framework import serializers
 
-from users.models import Geolocation
 from match.models import Match
+from products.models import Category, Product
+from users.models import Geolocation
 
 User = get_user_model()
 
@@ -113,3 +114,17 @@ class GeolocationSerializer(serializers.ModelSerializer):
         geolocation.longitude = validated_data['longitude']
         geolocation.save()
         return geolocation
+
+
+class CategorySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Category
+        fields = '__all__'
+
+
+class ProductSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Product
+        fields = '__all__'

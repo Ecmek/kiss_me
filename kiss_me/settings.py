@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
     'match.apps.MatchConfig',
+    'products.apps.ProductsConfig',
     'rest_framework',
     'rest_framework_simplejwt',
     'django_filters',

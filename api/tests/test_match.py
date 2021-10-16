@@ -9,6 +9,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from match.models import Match
+
 from .test_create import auth_client
 
 User = get_user_model()

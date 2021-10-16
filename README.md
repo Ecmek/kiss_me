@@ -13,6 +13,7 @@ python3 -m venv venv
 
 Для пользователей linux/Mac:
 source venv/bin/activate
+
 Для пользователей Windows:
 source venv/Scripts/activate
 

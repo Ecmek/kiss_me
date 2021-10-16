@@ -1,7 +1,11 @@
+from math import radians, sin, cos, acos
+
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from django.conf import settings
 
+from users.models import Geolocation
 from match.models import Match
 
 User = get_user_model()
@@ -28,10 +32,28 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserListSerializer(serializers.ModelSerializer):
+    distance = serializers.SerializerMethodField()
 
     class Meta:
         model = User
-        fields = ('id', 'avatar', 'gender', 'first_name', 'last_name', 'email')
+        fields = ('id', 'avatar', 'gender', 'first_name', 'last_name', 'email', 'distance')
+
+    def get_distance(self, obj):
+        try:
+            request_user = self.context['request'].user
+            user_location = request_user.geolocation
+            obj_location = obj.geolocation
+            self_latitude = radians(user_location.latitude)
+            self_longitude = radians(user_location.longitude)
+            obj_latitude = radians(obj_location.latitude)
+            obj_longitude = radians(obj_location.longitude)
+            cos_d = sin(self_latitude) * sin(obj_latitude) + cos(self_latitude) * cos(
+                    obj_longitude) * cos(self_longitude - obj_longitude)
+            return round(6371 * acos(cos_d))
+        except ObjectDoesNotExist:
+            return 'Невозможно определить растояние'
+        except ValueError:
+            return 0
 
 
 class MatchSerializer(serializers.ModelSerializer):
@@ -44,7 +66,6 @@ class MatchSerializer(serializers.ModelSerializer):
         slug_field='email', required=False,
         queryset=User.objects.all()
     )
-    mark = serializers.BooleanField()
 
     class Meta:
         model = Match
@@ -71,3 +92,24 @@ class MatchSerializer(serializers.ModelSerializer):
             )
 
         return data
+
+
+class GeolocationSerializer(serializers.ModelSerializer):
+    user = serializers.SlugRelatedField(
+        slug_field='email',
+        queryset=User.objects.all(),
+        default=serializers.CurrentUserDefault()
+    )
+
+    class Meta:
+        model = Geolocation
+        fields = ('user', 'latitude', 'longitude',)
+
+    def create(self, validated_data):
+        geolocation, created = Geolocation.objects.get_or_create(
+            user=validated_data['user']
+        )
+        geolocation.latitude = validated_data['latitude']
+        geolocation.longitude = validated_data['longitude']
+        geolocation.save()
+        return geolocation

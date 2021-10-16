@@ -18,7 +18,7 @@ class Match(models.Model):
     mark = models.BooleanField()
     mark_time = models.DateTimeField(
         auto_now=True,
-        verbose_name='Дата последного отметки'
+        verbose_name='Дата последней отметки'
     )
 
     class Meta:

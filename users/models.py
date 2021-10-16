@@ -62,3 +62,26 @@ class User(AbstractUser):
         y = height - mark_height - settings.MARGIN
         img.paste(watermark, (x, y), mask=paste_mask)
         img.save(self.avatar.path)
+
+
+class Geolocation(models.Model):
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE,
+        related_name='geolocation',
+        verbose_name='пользователь'
+    )
+    latitude = models.DecimalField(
+        max_digits=11, decimal_places=8,
+        verbose_name='Широта'
+    )
+    longitude = models.DecimalField(
+        max_digits=11, decimal_places=8,
+        verbose_name='Долгота'
+    )
+
+    class Meta:
+        verbose_name = 'Геолокация'
+        verbose_name_plural = 'Геолокации'
+
+    def __str__(self) -> str:
+        return f'{self.latitude}, {self.longitude}'

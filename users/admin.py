@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 
+from .models import Geolocation
+
 User = get_user_model()
 
 
@@ -14,4 +16,10 @@ class UserAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
 
 
+class GeolocationAdmin(admin.ModelAdmin):
+    list_display = ('user', 'latitude', 'longitude')
+    empty_value_display = '-пусто-'
+
+
 admin.site.register(User, UserAdmin)
+admin.site.register(Geolocation, GeolocationAdmin)

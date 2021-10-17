@@ -1,6 +1,6 @@
-from django.db.models import F, Value, Func, FloatField
-from django.db.models.functions import ACos, Cos, Sin, Radians
-from math import acos, cos, radians, sin
+from django.db.models import FloatField
+from django.db.models.functions import Cos, Sin, Radians
+from math import radians
 import geocoder
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
@@ -45,13 +45,13 @@ class UserListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 
     def get_queryset(self):
         request_user = self.request.user.geolocation
-        self_latitude = request_user.latitude
-        self_longitude = request_user.longitude
-        latitude = Radians('geolocation__latitude')
-        longitude = Radians('geolocation__longitude')
+        self_latitude = radians(request_user.latitude)
+        self_longitude = radians(request_user.longitude)
+        latitude = Radians('geolocation__latitude', output_field=FloatField())
+        longitude = Radians('geolocation__longitude', output_field=FloatField())
         return User.objects.annotate(distance=
-            (6371 * ACos(Sin(self_latitude) * Sin(latitude) + Cos(self_latitude
-            ) * Cos(longitude) * Cos(self_longitude - longitude)))
+            6371 * (Sin(self_latitude) * Sin(latitude) + Cos(self_latitude
+            ) * Cos(longitude) * Cos(self_longitude - longitude))
         )
 
 

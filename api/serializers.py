@@ -42,7 +42,6 @@ class UserListSerializer(serializers.ModelSerializer):
     def get_distance(self, obj):
         return obj.distance
 
-
 class MatchSerializer(serializers.ModelSerializer):
     user = serializers.SlugRelatedField(
         slug_field='email',

@@ -63,6 +63,7 @@ class MacthTest(APITestCase):
         response = self.male_client.get(f'/api/clients/{self.female.id}/match/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         data = response.data
+        data.pop('distance')
         for key, value in data.items():
             self.assertEqual(getattr(self.female, key), value)
 

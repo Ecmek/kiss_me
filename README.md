@@ -83,6 +83,8 @@ api/list/?limit=10&offset=0 - Пагинация
 api/list/?search=your_search - Поиск пользователя
 api/list/?ordering=first_name - сортировка по имени(алфовитный порядок)
 api/list/?gender=F - фильтрация по полу
+api/list/?min_distance - минимальная приближенность поиска(км)
+api/list/?max_distance - максмальная удаленность(км)
 ```
 Регистрация пользователя:
 ```

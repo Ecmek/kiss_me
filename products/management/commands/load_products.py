@@ -4,8 +4,8 @@ import time
 
 import requests
 from bs4 import BeautifulSoup
-from django.core.management.base import BaseCommand
 from django.conf import settings
+from django.core.management.base import BaseCommand
 
 from products.models import Category, Product
 

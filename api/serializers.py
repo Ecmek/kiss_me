@@ -33,14 +33,12 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserListSerializer(serializers.ModelSerializer):
-    distance = serializers.SerializerMethodField()
+    distance = serializers.IntegerField()
 
     class Meta:
         model = User
         fields = ('id', 'avatar', 'gender', 'first_name', 'last_name', 'email', 'distance',)
 
-    def get_distance(self, obj):
-        return obj.distance
 
 class MatchSerializer(serializers.ModelSerializer):
     user = serializers.SlugRelatedField(

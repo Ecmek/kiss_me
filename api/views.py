@@ -1,20 +1,21 @@
-from django.db.models import FloatField
-from django.db.models.functions import Cos, Sin, Radians
 from math import radians
+
 import geocoder
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
+from django.db.models import FloatField
+from django.db.models.functions import Cos, Radians, Sin
+from django.db.models.functions.math import ACos
 from django.shortcuts import get_object_or_404
 from rest_framework import mixins, status, viewsets
 from rest_framework.decorators import api_view
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from api.filters import GeolocationFilter
 
+from api.filters import GeolocationFilter
 from match.models import Match
 from products.models import Category
-from users.models import Geolocation
 
 from .serializers import (CategorySerializer, GeolocationSerializer,
                           MatchSerializer, ProductSerializer,
@@ -50,9 +51,9 @@ class UserListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
         latitude = Radians('geolocation__latitude', output_field=FloatField())
         longitude = Radians('geolocation__longitude', output_field=FloatField())
         return User.objects.annotate(distance=
-            6371 * (Sin(self_latitude) * Sin(latitude) + Cos(self_latitude
+            6371 * ACos(Sin(self_latitude) * Sin(latitude) + Cos(self_latitude
             ) * Cos(longitude) * Cos(self_longitude - longitude))
-        )
+        ).exclude(id=self.request.user.id)
 
 
 class MatchAPIView(APIView):

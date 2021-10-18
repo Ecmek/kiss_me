@@ -11,7 +11,7 @@ router = routers.DefaultRouter()
 router.register('clients/create', UserViewSet, basename='user_create')
 router.register('list', UserListViewSet, basename='users_list')
 router.register('category', CategoryListViewSet, basename='category')
-router.register(r'products/(?P<category_slug>\w+)', ProductsListViewSet, basename='products')
+router.register(r'products/(?P<category_slug>[\w\@\.\+\-]+)', ProductsListViewSet, basename='products')
 
 urlpatterns = [
     path('', include(router.urls)),

@@ -53,7 +53,7 @@ class UserListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
         return User.objects.annotate(distance=
             6371 * ACos(Sin(self_latitude) * Sin(latitude) + Cos(self_latitude
             ) * Cos(longitude) * Cos(self_longitude - longitude))
-        ).exclude(id=self.request.user.id)
+            ).exclude(id=self.request.user.id)
 
 
 class MatchAPIView(APIView):

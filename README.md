@@ -51,7 +51,7 @@ url_category, title_category, slug_category
 ```
 python manage.py https://www.citilink.ru/catalog/setevye-hranilischa-nas/ 'Сетевые хранилища NAS' setevye-hranilischa-nas
 ```
-После этой комманды будет создана категория "Сетевые хранилища NAS" со слагом 'setevye-hranilischa-nas' и в данную категорию будут добавлены товары.
+После этой комманды будет создана категория 'Сетевые хранилища NAS' со слагом 'setevye-hranilischa-nas' и в данную категорию будут добавлены товары.
 
 Просмотреть их можно будет.
 ```

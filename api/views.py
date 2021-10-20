@@ -26,6 +26,9 @@ User = get_user_model()
 
 
 class UserViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
+    """
+    View for create the user
+    """
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = (AllowAny,)
@@ -36,6 +39,9 @@ class UserViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
 
 
 class UserListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    """
+    View for show list of users with current distance
+    """
     queryset = User.objects.all()
     serializer_class = UserListSerializer
     filterset_class = GeolocationFilter
@@ -59,6 +65,9 @@ class UserListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 class MatchAPIView(APIView):
 
     def get(self, request, id):
+        """
+        Show information about select user
+        """
         matching = get_object_or_404(User, id=id)
         context = {
             "request": self.request,
@@ -68,6 +77,9 @@ class MatchAPIView(APIView):
         return Response(serializer.data)
 
     def post(self, request, id):
+        """
+        Show information about select user
+        """
         matching = get_object_or_404(User, id=id)
         context = {
             "request": self.request,

@@ -68,7 +68,7 @@ api/clients/create/ - создание пользователя,
 api/clients/token/ - получить токен,
 api/clients/token/refresh/ - обновление токена,
 api/list/ - просмотр других пользователей,
-api/clients/{user_id}/match - оценка пользователя
+api/clients/{user_id}/match/ - оценка пользователя
 api/clients/get_geolocation/ - определяет геолокацию по IP,
 api/clients/set_geolocation/ - устанавливают заданную геолокацию,
 ```
